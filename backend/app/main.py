@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 from app.api.v1.router import router
 from app.core.config import settings
@@ -9,6 +10,14 @@ app = FastAPI(
     description="@churadata.okinawa ドメイン限定の Gemini チャット API",
     version="1.0.0",
 )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Internal server error"},
+    )
 
 app.add_middleware(
     CORSMiddleware,
