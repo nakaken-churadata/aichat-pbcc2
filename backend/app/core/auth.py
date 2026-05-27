@@ -13,24 +13,25 @@ ALLOWED_DOMAIN = "churadata.okinawa"
 
 
 def verify_google_id_token(token: str) -> dict:
-    """Google の id_token を JWKS で検証し、hd クレームを確認する"""
+    """Google の id_token を JWKS で検証し、hd クレームおよび email ドメインを確認する"""
     try:
         idinfo = google_id_token.verify_oauth2_token(
             token,
             google_requests.Request(),
             settings.google_client_id,
         )
-    except ValueError as e:
+    except ValueError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail=f"Invalid id_token: {e}",
+            detail="Invalid token",
         )
 
     hd = idinfo.get("hd")
-    if hd != ALLOWED_DOMAIN:
+    email = idinfo.get("email", "")
+    if hd != ALLOWED_DOMAIN or not email.endswith(f"@{ALLOWED_DOMAIN}"):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"Forbidden domain: {hd}",
+            detail="Forbidden domain",
         )
 
     return idinfo

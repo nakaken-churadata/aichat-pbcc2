@@ -1,4 +1,5 @@
 import axios from "axios";
+import { signIn } from "next-auth/react";
 import type { ChatRequest, ChatResponse, User } from "@/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
@@ -9,6 +10,21 @@ export const apiClient = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+// 401 レスポンス受信時に id_token 期限切れとみなし、再ログインへ誘導する
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error: unknown) => {
+    if (
+      axios.isAxiosError(error) &&
+      error.response?.status === 401
+    ) {
+      // セッション更新を促すためにログインページへリダイレクト
+      void signIn("google");
+    }
+    return Promise.reject(error);
+  },
+);
 
 export async function sendChatMessage(
   request: ChatRequest,
