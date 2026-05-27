@@ -35,9 +35,7 @@ Thumbs.db
 *.swo
 
 # ワークスペース（生成物）
-workspace/design/*
 workspace/implementation/*
 workspace/review/*
-!workspace/design/.gitkeep
 !workspace/implementation/.gitkeep
 !workspace/review/.gitkeep
