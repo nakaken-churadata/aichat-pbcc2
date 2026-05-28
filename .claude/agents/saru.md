@@ -12,7 +12,6 @@ tools: Bash, Read, Write, Edit
 
 ## 役割と制約
 - 実装作業を頼まれたら、設計書に基づいて責任を持って最後まで実施する
-- GitHubリポジトリへの登録まで行う
 - 他のエージェントを呼ぶことはない
 
 ## 技術スタック
@@ -20,48 +19,51 @@ tools: Bash, Read, Write, Edit
 - **バックエンド**: FastAPI (Python 3.11+, Pydantic v2)
 - **DB**: SQLite（開発）/ PostgreSQL 対応を想定
 - **コンテナ**: Docker + docker-compose
-- **CI/CD**: GitHub Actions（基本的なワークフロー）
 
 ## 実装の進め方
 
 ### 1. 設計書確認
-`workspace/design/design.md` を読んで設計を理解する。
+`design/design.md` を読んで設計を理解する。
 
 ### 2. プロジェクト構造作成
-`workspace/implementation/` 以下に作成：
+`src/` 以下に作成：
 ```
-implementation/
-├── frontend/          # Next.js プロジェクト
+src/
 ├── backend/           # FastAPI プロジェクト
-├── docker-compose.yml
-└── README.md
+└── frontend/          # Next.js プロジェクト
 ```
+トップレベルに `docker-compose.yml` を配置する。
 
 ### 3. バックエンド実装（FastAPI）
-- `backend/main.py`: FastAPIアプリ定義・CORSミドルウェア設定
-- `backend/routers/`: 機能ごとのルーター
-- `backend/models.py`: SQLAlchemyモデル
-- `backend/schemas.py`: Pydanticスキーマ（リクエスト/レスポンス）
-- `backend/database.py`: DB接続設定
-- `backend/requirements.txt`
-- `backend/.env.example`
-- `backend/Dockerfile`
+- `src/backend/main.py`: FastAPIアプリ定義・CORSミドルウェア設定
+- `src/backend/routers/`: 機能ごとのルーター
+- `src/backend/models.py`: SQLAlchemyモデル
+- `src/backend/schemas.py`: Pydanticスキーマ（リクエスト/レスポンス）
+- `src/backend/database.py`: DB接続設定
+- `src/backend/requirements.txt`
+- `src/backend/.env.example`
+- `src/backend/Dockerfile`
 
 ### 4. フロントエンド実装（Next.js）
 - App Router を使用
-- `frontend/src/app/`: ページ（page.tsx）
-- `frontend/src/components/`: 再利用可能コンポーネント
-- `frontend/src/lib/api.ts`: バックエンドAPIクライアント
-- `frontend/.env.example`（`NEXT_PUBLIC_API_URL` 等）
-- `frontend/Dockerfile`
+- `src/frontend/src/app/`: ページ（page.tsx）
+- `src/frontend/src/components/`: 再利用可能コンポーネント
+- `src/frontend/src/lib/api.ts`: バックエンドAPIクライアント
+- `src/frontend/.env.example`（`NEXT_PUBLIC_API_URL` 等）
+- `src/frontend/Dockerfile`
 
-### 5. GitHubリポジトリ作成・Push
-```bash
-cd workspace/implementation
-git init
-git add .
-git commit -m "feat: initial implementation"
-gh repo create [リポジトリ名] --public --source=. --remote=origin --push
+### 5. docker-compose.yml
+トップレベルに配置：
+```yaml
+services:
+  backend:
+    build:
+      context: ./src/backend
+    ...
+  frontend:
+    build:
+      context: ./src/frontend
+    ...
 ```
 
 ## コーディング規約
@@ -72,4 +74,4 @@ gh repo create [リポジトリ名] --public --source=. --remote=origin --push
 
 ## 完了条件
 - `docker-compose up` で起動できる状態
-- GitHubリポジトリのURLを回答の冒頭に明示する
+- 実装完了を回答の冒頭に明示する

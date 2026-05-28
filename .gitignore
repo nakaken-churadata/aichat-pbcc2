@@ -1,15 +1,15 @@
 # Environment files
 .env
 .env.local
-frontend/.env
-frontend/.env.local
-backend/.env
+src/frontend/.env
+src/frontend/.env.local
+src/backend/.env
 
 # Node
 node_modules/
-frontend/node_modules/
-frontend/.next/
-frontend/out/
+src/frontend/node_modules/
+src/frontend/.next/
+src/frontend/out/
 
 # Python
 __pycache__/
@@ -17,8 +17,8 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
-backend/.venv/
-backend/venv/
+src/backend/.venv/
+src/backend/venv/
 *.egg-info/
 
 # Docker
@@ -34,8 +34,6 @@ Thumbs.db
 *.swp
 *.swo
 
-# ワークスペース（生成物）
-workspace/implementation/*
-workspace/review/*
-!workspace/implementation/.gitkeep
-!workspace/review/.gitkeep
+# レビュー・設計（生成物）
+review/*
+!review/.gitkeep

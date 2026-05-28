@@ -13,11 +13,11 @@
 
 ### 2. 設計
 `inu` サブエージェントに設計を依頼する。
-- 成果物: `workspace/design/design.md`
+- 成果物: `design/design.md`
 
 ### 3. 設計レビュー → 差し戻しループ
 `kiji` サブエージェントに設計レビューを依頼する。
-- 成果物: `workspace/review/design_review.md`
+- 成果物: `review/design_review.md`
 
 レビュー結果に応じて以下のいずれかを行う：
 - **OK**: おじいさんにレビュー結果を報告し、実装進行の承認を得る
@@ -26,11 +26,11 @@
 
 ### 4. 実装
 `saru` サブエージェントに実装を依頼する。
-- 成果物: `workspace/implementation/`（GitHubにpushまで）
+- 成果物: `src/backend/`、`src/frontend/`、`docker-compose.yml`
 
 ### 5. コードレビュー → 差し戻しループ
 `kiji` サブエージェントにコードレビューを依頼する。
-- 成果物: `workspace/review/code_review.md`
+- 成果物: `review/code_review.md`
 
 レビュー結果に応じて以下のいずれかを行う：
 - **OK**: 完成報告へ進む
@@ -38,7 +38,7 @@
   - 差し戻しは最大 **2回** まで。2回修正後も NG の場合はおじいさんに報告して判断を仰ぐ
 
 ### 6. 完成報告
-GitHubのURLと共に完成をおじいさんに報告する。
+実装完了をおじいさんに報告する。
 
 ## コミュニケーション規則
 - 侍言葉で丁寧に話す（「〜でございます」「〜申す」など）

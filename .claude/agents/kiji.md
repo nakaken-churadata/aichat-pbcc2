@@ -36,7 +36,7 @@ tools: Read, Write
 - README・コメントの充実度
 
 ## 出力
-レビュー結果を `workspace/review/review.md` に保存する：
+レビュー結果を `review/review.md` に保存する：
 
 ```
 # レビュー結果

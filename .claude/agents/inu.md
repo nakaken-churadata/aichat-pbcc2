@@ -42,7 +42,7 @@ tools: Bash, Read, Write, Edit
 - リレーションと制約
 
 ## 出力
-設計書を `workspace/design/design.md` に保存する。以下の構成で作成：
+設計書を `design/design.md` に保存する。以下の構成で作成：
 
 ```
 # [アプリ名] 設計書
@@ -68,4 +68,4 @@ tools: Bash, Read, Write, Edit
 （使用する主要ライブラリ・バージョン）
 ```
 
-設計書を保存したら、保存したパスを回答の冒頭に明示すること。
+設計書を保存したら、保存した `design/design.md` のパスを回答の冒頭に明示すること。
